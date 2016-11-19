@@ -100,7 +100,16 @@ class Message extends BaseMessage
      */
     public function setReplyTo($replyTo)
     {
-        $this->getMessageBuilder()->setReplyToAddress($replyTo);
+        /**
+         * Added compliance with swift_mailer to set Name <email> like ['email' => 'name']
+         */
+        $variables = [];
+        if(is_array($replyTo)) {
+            $email = each($replyTo);
+            $replyTo = $email['key'];
+            $variables['full_name'] = $email['value'];
+        }
+        $this->getMessageBuilder()->setReplyToAddress($replyTo, $variables);
 
         return $this;
     }
@@ -118,7 +127,16 @@ class Message extends BaseMessage
      */
     public function setTo($to)
     {
-        $this->getMessageBuilder()->addToRecipient($to);
+        /**
+         * Added compliance with swift_mailer to set Name <email> like ['email' => 'name']
+         */
+        $variables = [];
+        if(is_array($to)) {
+            $email = each($to);
+            $to = $email['key'];
+            $variables['full_name'] = $email['value'];
+        }
+        $this->getMessageBuilder()->addToRecipient($to, $variables);
 
         return $this;
     }
@@ -136,7 +154,16 @@ class Message extends BaseMessage
      */
     public function setCc($cc)
     {
-        $this->getMessageBuilder()->addCcRecipient($cc);
+        /**
+         * Added compliance with swift_mailer to set Name <email> like ['email' => 'name']
+         */
+        $variables = [];
+        if(is_array($cc)) {
+            $email = each($cc);
+            $cc = $email['key'];
+            $variables['full_name'] = $email['value'];
+        }
+        $this->getMessageBuilder()->addCcRecipient($cc, $variables);
 
         return $this;
     }
@@ -154,7 +181,16 @@ class Message extends BaseMessage
      */
     public function setBcc($bcc)
     {
-        $this->getMessageBuilder()->addBccRecipient($bcc);
+        /**
+         * Added compliance with swift_mailer to set Name <email> like ['email' => 'name']
+         */
+        $variables = [];
+        if(is_array($bcc)) {
+            $email = each($bcc);
+            $bcc = $email['key'];
+            $variables['full_name'] = $email['value'];
+        }
+        $this->getMessageBuilder()->addBccRecipient($bcc, $variables);
 
         return $this;
     }
